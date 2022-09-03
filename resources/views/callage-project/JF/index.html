@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>hi bab</title>
+    <style>
+      img {
+        height: 75px;
+        width: 75px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <label for="">Product Name</label>
+      <input type="text" id="nameinp" /><br /><br />
+      <label for="">Product Price</label>
+      <input type="text" id="priceinp" /><br /><br />
+      <label for="">Stock (Quentity)</label>
+      <input type="text" id="stockinp" /><br /><br />
+
+      <label for="">Catagory</label>
+      <select name="" id="catinp">
+        <option value="Keybord & Mouse">Keybord & Mouse</option>
+        <option value="Laptops">Laptops</option>
+        <option value="Moniters">Moniters</option>
+        <option value="Grapics Card">Grapics Card</option>
+        <option value="Power Supply">Power Supply</option></select
+      ><br /><br />
+
+      <label for="">Pointes #1</label>
+      <input type="text" id="p1inp" /><br /><br />
+      <label for="">Pointes #2</label>
+      <input type="text" id="p2inp" /><br /><br />
+      <label for="">Pointes #3</label>
+      <input type="text" id="p3inp" /><br /><br />
+      <label for="">Pointes #4</label>
+      <input type="text" id="p4inp" /><br /><br />
+
+      <label for="">Product Description</label>
+      <textarea name="" id="desarea" cols="#" rows="#"></textarea><br /><br />
+
+      <div id="imgesDiv">
+        <br /><br />
+        <label for="" id="loadlab"></label>
+        <button id="addprodbtn">Add Product</button>
+        <button id="selimgsbtn">Select Product</button>
+      </div>
+    </div>
+
+    <script type="module">
+      // refarenc and variable
+
+      const Files = [];
+      const FileReaders = [];
+      const ImgeLinksArray = [];
+
+      const imgdiv = document.getElementById("iamgesDiv");
+      const selBtn = document.getElementById("selimgsbtn");
+      const addBtn = document.getElementById("addprodbtn");
+      const proglab = document.getElementById("loadlab");
+
+      const name = document.getElementById("nameinp");
+      const category = document.getElementById("catinp");
+      const description = document.getElementById("desarea");
+      const price = document.getElementById("priceinp");
+      const stock = document.getElementById("stockinp");
+
+      const p1 = document.getElementById("p1inp");
+      const p2 = document.getElementById("p2inp");
+      const p3inp = document.getElementById("p3inp");
+      const p4 = document.getElementById("p4inp");
+
+      function openFileDialog() {
+        let inp = document.createElement("input");
+        inp.type = "file";
+        inp.multiple = "multiple";
+
+        inp.onchange = (e) => {
+          AssignImgsTOFilesArrsy(e.target.files);
+          CreateImgTags();
+        };
+        inp.click();
+      }
+
+      function AssignImgsTOFilesArrsy(thefiles) {
+        let num = Files.length + thefiles.length;
+        let looplim = num <= 10 ? thefiles.length : 10 - Files.length;
+
+        for (let i = 0; i < looplim; i++) {
+          Files.push(thefiles[i]);
+        }
+
+        if (num > 10) alert("Sorry boss your limite will be cross");
+      }
+
+      function CreateImgTags() {
+        imgdiv.innerHTML = "";
+
+        for (let i = 0; i < Files.length; i++) {
+          FileReaders[i].onload = new FileReader();
+
+          FileReaders[i].onload = function () {
+            var img = document.createElement("img");
+            img.id = "imgNo" + i;
+            img.classList.add("imgs");
+            img.src = FileReaders[i].result;
+            imgdiv.append(img);
+          };
+
+          FileReaders[i].readAsDataURL(Files[i]);
+        }
+      }
+
+      // Events ==========================
+
+      selBtn.addEventListener("click", openFileDialog);
+    </script>
+  </body>
+</html>
